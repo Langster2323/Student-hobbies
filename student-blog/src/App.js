@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { BrowserRouter, Route } from 'react-router-dom';
 import StudentList from './components/StudentList';
 import Student from './components/Student';
+import SearchBox from './components/SearchBox';
 
 class App extends Component {
   constructor(props){
@@ -19,12 +20,8 @@ class App extends Component {
         { id: 9, firstName: 'Ali', lastName: 'Long', age: 29, hobbies: 'Rugby, board games, bouldering'},
         { id: 10, firstName: 'Alison', lastName: 'Long', age: 25, hobbies: 'Sand Volleyball, RTS video games, hiking'}
       ],
+      search: ''
     }
-  }
-
-  editHobbie = (hobbieID) => {
-    console.log(hobbieID);
-
   }
 
   updateHobby = (e, i) => {
@@ -51,11 +48,26 @@ class App extends Component {
     })
   }
 
+  updateSearch = (e) => {
+    this.setState({
+      search: e.target.value
+    })
+  }
+
   render(){
+    let filteredStudents = this.state.students.filter(student => {
+      return student.firstName.toLowerCase().indexOf(this.state.search.toLowerCase()) !== -1;
+    })
     return (
       <BrowserRouter>
         <div className="App">
-          <Route exact path="/"><StudentList handleKeyDown={this.handleKeyDown} updateHobby={this.updateHobby} students={this.state.students} /></Route>
+          <SearchBox search={this.state.search} updateSearch={this.updateSearch}  />
+          <Route exact path="/"><StudentList 
+          filteredStudents={filteredStudents} 
+          handleKeyDown={this.handleKeyDown} 
+          updateHobby={this.updateHobby} 
+          students={this.state.students}
+           /></Route>
           <Route path="/:student_id" component={Student} />
         </div>
       </BrowserRouter>

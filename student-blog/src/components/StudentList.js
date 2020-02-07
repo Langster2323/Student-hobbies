@@ -6,9 +6,9 @@ class StudentList extends Component {
 
     render() {
         console.log(this.props)
-        const { students } = this.props;
+        const { students, filteredStudents } = this.props;
         const studentList = students.length ? (
-            students.map((student, i) => {
+            filteredStudents.map((student, i) => {
                 return (
                     <div className="student card" key={student.id}>
                         <div className="card-content">
