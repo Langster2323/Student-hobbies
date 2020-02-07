@@ -1,16 +1,27 @@
 import React, {Component} from 'react';
+import { Link } from 'react-router-dom';
 
 class StudentList extends Component {
+    
+
     render() {
         console.log(this.props)
         const { students } = this.props;
         const studentList = students.length ? (
-            students.map(student => {
+            students.map((student, i) => {
                 return (
                     <div className="student card" key={student.id}>
                         <div className="card-content">
+                            <Link to={'/' + student.id}>
                                 <span className="card-title red-text">{student.firstName} {student.lastName} </span>
-                             <p>{student.hobbies}</p>
+                            </Link>
+                                
+                             <input
+                                 type="text"
+                                 value={student.hobbies}
+                                 onKeyDown={e => this.props.handleKeyDown(e, i)}
+                                 onChange={e => this.props.updateHobby(e, i)}
+                              />
                         </div>
                     </div>
                 )

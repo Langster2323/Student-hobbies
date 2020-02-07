@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
+import { BrowserRouter, Route } from 'react-router-dom';
 import StudentList from './components/StudentList';
+import Student from './components/Student';
 
 class App extends Component {
   constructor(props){
@@ -16,16 +18,48 @@ class App extends Component {
         { id: 8, firstName: 'Jude', lastName: 'Beatle', age: 62, hobbies: 'Baseball, board games, bouldering'},
         { id: 9, firstName: 'Ali', lastName: 'Long', age: 29, hobbies: 'Rugby, board games, bouldering'},
         { id: 10, firstName: 'Alison', lastName: 'Long', age: 25, hobbies: 'Sand Volleyball, RTS video games, hiking'}
-      ]
+      ],
     }
   }
 
+  editHobbie = (hobbieID) => {
+    console.log(hobbieID);
+
+  }
+
+  updateHobby = (e, i) => {
+    const newHobby = [...this.state.students]
+    newHobby[i].hobbies = e.target.value;
+    this.setState({
+      newHobby
+    })
+  }
+
+  handleKeyDown = (e, i) => {
+    if(e.key === 'enter') {
+      this.createHobbyAtIndex(e, i);
+    }
+  }
+
+  createHobbyAtIndex = (e, i) => {
+    const newHobby = [...this.state.students];
+    newHobby.splice(i + 1, {
+      hobbies: ''
+    });
+    this.setState({
+      newHobby
+    })
+  }
+
   render(){
-    console.log(this.state.students)
     return (
-      <div className="App">
-        <StudentList students={this.state.students} />
-      </div>
+      <BrowserRouter>
+        <div className="App">
+          <Route exact path="/"><StudentList handleKeyDown={this.handleKeyDown} updateHobby={this.updateHobby} students={this.state.students} /></Route>
+          <Route path="/:student_id" component={Student} />
+        </div>
+      </BrowserRouter>
+      
     );
   }
   
