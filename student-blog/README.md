@@ -1,6 +1,6 @@
 Download this app by performing 
 
-## git clone .....
+### git clone .....
 
 After clonging the repo change directory to project file, then run 
 
