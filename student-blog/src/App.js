@@ -7,6 +7,13 @@ import { connect } from 'react-redux';
 
 class App extends Component {
 
+  constructor(props){
+    super(props);
+    this.state = {
+      search: ''
+    }
+  }
+
   updateHobby = (e, i) => {
     const newHobby = [...this.props.students]
     newHobby[i].hobbies = e.target.value;
@@ -38,18 +45,20 @@ class App extends Component {
   }
 
   render(){
-    let filteredStudents = this.props.students.filter(student => {
-      return student.firstName.toLowerCase().indexOf(this.props.search.toLowerCase()) !== -1;
+    const { search } = this.state;
+    const { students } = this.props;
+    let filteredStudents = students.filter(student => {
+      return student.firstName.toLowerCase().indexOf(search.toLowerCase()) !== -1;
     })
     return (
       <BrowserRouter>
         <div className="App">
-          <SearchBox search={this.props.search} updateSearch={this.updateSearch}  />
+          <SearchBox search={search} updateSearch={this.updateSearch}  />
           <Route exact path="/"><StudentList 
           filteredStudents={filteredStudents} 
           handleKeyDown={this.handleKeyDown} 
           updateHobby={this.updateHobby} 
-          students={this.props.students}
+          students={students}
            /></Route>
           <Route path="/:student_id" component={Student} />
         </div>
