@@ -1,23 +1,15 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 
 class Student extends Component {
-    state = {
-        student: null
-    }
-
-    componentDidMount(){
-        console.log(this.props)
-        let id = this.props.match.params.student_id;
-        this.setState({
-            id
-        })
-    }
+   
     render(){
-        const { students } = this.props
-        const student = students ? (
+        console.log(this.props);
+        
+        const student = this.props.student ? (
             <div className="student">
-                <h4 className="center">{students.firstName} {students.lastName}</h4>
-                <p>{students.hobbies}</p>
+                <h4 className="center">{this.props.student.firstName} {this.props.student.lastName}</h4>
+                <p>{this.props.student.hobbies}</p>
             </div>
         ) : (
             <div className="center">Loading information...</div>
@@ -30,4 +22,11 @@ class Student extends Component {
     }
 }
 
-export default Student;
+const mapStateToProps = (state, ownProps) => {
+    let id = ownProps.match.params.student_id;
+    return {
+        student: state.students
+    }
+}
+
+export default connect(mapStateToProps)(Student);
