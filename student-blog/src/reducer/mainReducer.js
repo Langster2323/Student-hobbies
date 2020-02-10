@@ -10,8 +10,7 @@ const initialState = {
         { id: 8, firstName: 'Jude', lastName: 'Beatle', age: 62, hobbies: 'Baseball, board games, bouldering'},
         { id: 9, firstName: 'Ali', lastName: 'Long', age: 29, hobbies: 'Rugby, board games, bouldering'},
         { id: 10, firstName: 'Alison', lastName: 'Long', age: 25, hobbies: 'Sand Volleyball, RTS video games, hiking'}
-      ],
-      search: ''
+      ]
 }
 
 const mainReducer = (state = initialState, action) => {
